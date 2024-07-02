@@ -1,6 +1,7 @@
 package br.com.challenge_alura_one_t6.AluraForum.entities;
 
 
+import br.com.challenge_alura_one_t6.AluraForum.enums.TopicStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -20,13 +21,17 @@ public class Topic implements Serializable {
 
     private String message;
 
-    private LocalDateTime createAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private User user;
+
+    @Enumerated(EnumType.STRING)
+    private TopicStatus status = TopicStatus.NOT_SOLVED;
+
 
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

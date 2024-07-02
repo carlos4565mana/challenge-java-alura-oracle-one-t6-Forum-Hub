@@ -16,7 +16,7 @@ public class Course implements Serializable {
     private Long id;
     private String name;
     private String category;
-    private Boolean status;
+    private Boolean status = true;
 
 }
 
