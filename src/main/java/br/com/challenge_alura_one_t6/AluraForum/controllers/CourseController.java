@@ -11,6 +11,7 @@ import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.concurrent.Callable;
 
 @RestController
 @RequestMapping("/api/v1/courses")
@@ -41,6 +42,20 @@ public class CourseController {
         Course  savedCourse = this.courseService.save(newCourse);
         CourseDto savedCourseDto = this.courseToCourseDtoConverter.convert(savedCourse);
         return new Result(true, StatusCode.SUCCESS, "Add Success",savedCourseDto);
+    }
+    @PutMapping("{courseId}")
+    public Result updateCourse(@PathVariable Long courseId, @Valid @RequestBody CourseDto courseDto){
+       Course update =  this.courseDtoToCourseCnverter.convert(courseDto);
+       Course updatedCourse = this.courseService.updateCourse(courseId, update);
+       CourseDto updatedCourseDto = this.courseToCourseDtoConverter.convert(updatedCourse);
+
+        return new Result(true, StatusCode.SUCCESS, "Update Sucsess",updatedCourseDto);
+
+    }
+    public Result deleteCourse(@PathVariable Long courseId){
+        this.courseService.delete(courseId);
+        return new Result(true, StatusCode.SUCCESS,"Delete Success");
+
     }
 }
 

@@ -1,9 +1,8 @@
 package br.com.challenge_alura_one_t6.AluraForum.service;
 
 import br.com.challenge_alura_one_t6.AluraForum.entities.Course;
-import br.com.challenge_alura_one_t6.AluraForum.entities.Topic;
-import br.com.challenge_alura_one_t6.AluraForum.entities.User;
 import br.com.challenge_alura_one_t6.AluraForum.exception.CourseNotFoundException;
+import br.com.challenge_alura_one_t6.AluraForum.exception.ObjectNotFoundException;
 import br.com.challenge_alura_one_t6.AluraForum.repositorie.CourseRepository;
 import br.com.challenge_alura_one_t6.AluraForum.utils.IdWorker;
 import org.junit.jupiter.api.AfterEach;
@@ -24,10 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class CourseServiceTest {
@@ -100,7 +97,7 @@ class CourseServiceTest {
             Course returnedCourse = courseService.findById(1L);
         });
 
-        assertThat(throwable).isInstanceOf(CourseNotFoundException.class).hasMessage("Could not find course with Id 1:(");
+        assertThat(throwable).isInstanceOf(ObjectNotFoundException.class).hasMessage("Could not find course with Id 1 :(");
         verify(courseRepository,times(1)).findById(1L);
 
     }
@@ -126,12 +123,79 @@ class CourseServiceTest {
         assertThat(savedCourse.getCategory()).isEqualTo(newCourse.getCategory());
         assertThat(savedCourse.getStatus()).isEqualTo(newCourse.getStatus());
         verify(courseRepository, times(1)).save(newCourse);
+    }
+    @Test
+    void updateCourseSuccess() {
+        Course oldCourse = new Course();
+        oldCourse.setId(1L);
+        oldCourse.setName("Java");
+        oldCourse.setCategory("Programação");
+        oldCourse.setStatus(true);
 
+        Course updateCourse = new Course();
+        updateCourse.setId(1L);
+        updateCourse.setName("Java");
+        updateCourse.setCategory("Programação");
+        updateCourse.setStatus(false);
 
+        given(courseRepository.findById(1L)).willReturn(Optional.of(oldCourse));
 
+        given(courseRepository.save(oldCourse)).willReturn(oldCourse);
+
+        Course updatedCourse = courseService.updateCourse(1L, updateCourse);
+
+        assertThat(updatedCourse.getId()).isEqualTo(1L);
+        assertThat(updatedCourse.getName()).isEqualTo(updatedCourse.getName());
+        assertThat(updatedCourse.getCategory()).isEqualTo(updatedCourse.getCategory());
+        assertThat(updatedCourse.getStatus()).isEqualTo(updatedCourse.getStatus());
+
+        verify(courseRepository, times(1)).findById(1L);
+        verify(courseRepository, times(1)).save(oldCourse);
+    }
+
+    @Test
+    void updateCourseNotFount(){
+            Course upd= new Course();
+            upd.setName("Java");
+            upd.setCategory("Programação");
+            upd.setStatus(false);
+
+            given(courseRepository.findById(1L)).willReturn(Optional.empty());
+
+            assertThrows(ObjectNotFoundException.class, () -> courseService.updateCourse(1L, upd));
+
+            verify(courseRepository, times(1)).findById(1L);
 
 
     }
+    @Test
+    void deleteSuccess(){
+        Course upd1= new Course();
+        upd1.setId(1L);
+        upd1.setName("Java");
+        upd1.setCategory("Programação");
+        upd1.setStatus(false);
+        given(courseRepository.findById(1l)).willReturn(Optional.of(upd1));
+        doNothing().when(courseRepository).deleteById(1L);
+
+        courseService.delete(1L);
+
+        verify(courseRepository, times(1)).deleteById(1L);
+
+    }
+
+    @Test
+    void deleteNotFound(){
+
+        given(courseRepository.findById(1l)).willReturn(Optional.empty());
+
+        assertThrows(CourseNotFoundException.class,()->{
+            courseService.delete(1L);
+        });
+
+        verify(courseRepository, times(1)).findById(1L);
+    }
+
 }
 
 

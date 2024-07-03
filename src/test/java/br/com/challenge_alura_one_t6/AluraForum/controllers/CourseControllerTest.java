@@ -3,6 +3,7 @@ package br.com.challenge_alura_one_t6.AluraForum.controllers;
 import br.com.challenge_alura_one_t6.AluraForum.dtos.CourseDto;
 import br.com.challenge_alura_one_t6.AluraForum.entities.Course;
 import br.com.challenge_alura_one_t6.AluraForum.exception.CourseNotFoundException;
+import br.com.challenge_alura_one_t6.AluraForum.exception.ObjectNotFoundException;
 import br.com.challenge_alura_one_t6.AluraForum.service.CourseService;
 import br.com.challenge_alura_one_t6.AluraForum.system.StatusCode;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -18,6 +19,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.http.MediaType;
+
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doThrow;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -134,8 +138,74 @@ class CourseControllerTest {
                 .andExpect(jsonPath("$.data.category").value(savedCourse.getCategory()))
                 .andExpect(jsonPath("$.data.status").value(savedCourse.getStatus()));
 
+    }
+    @Test
+    void updateCourseSuccess() throws Exception {
+
+        CourseDto courseDto = new CourseDto(1250808601744984197L,"C++","Programação",true);
+        String json = this.objectMapper.writeValueAsString(courseDto);
+        Course updatedCourse = new Course();
+        updatedCourse.setId(1250808601744984197L);
+        updatedCourse.setName("C++");
+        updatedCourse.setCategory("Programação");
+        updatedCourse.setStatus(false);
+
+
+        given(this.courseService.updateCourse(1250808601744984197L,Mockito.any(Course.class))).willReturn(updatedCourse);
+
+        this.mockMvc.perform(put("/api/v1/courses/1250808601744984197").contentType(MediaType.APPLICATION_JSON).content(json).accept(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.flag").value(true))
+                .andExpect(jsonPath("$.code").value(StatusCode.SUCCESS))
+                .andExpect(jsonPath("$.message").value("Update Success"))
+                .andExpect(jsonPath("$.data.id").value(1250808601744984197L))
+                .andExpect(jsonPath("$.data.name").value(updatedCourse.getName()))
+                .andExpect(jsonPath("$.data.category").value(updatedCourse.getCategory()))
+                .andExpect(jsonPath("$.data.status").value(updatedCourse.getStatus()));
 
     }
+    @Test
+    void testUpdateCourseErrorWithNonExistentId() throws Exception {
+        // Given
+        CourseDto courseDto = new CourseDto(1250808601744984197L,"C++","Programação",true);
+
+        String json = this.objectMapper.writeValueAsString(courseDto);
+
+        given(this.courseService.updateCourse(eq(1250808601744904192L), Mockito.any(Course.class))).willThrow(new ObjectNotFoundException("course", 1250808601744904192L));
+
+        // When and then
+        this.mockMvc.perform(put("/api/v1/courses/1250808601744904192").contentType(MediaType.APPLICATION_JSON).content(json).accept(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.flag").value(false))
+                .andExpect(jsonPath("$.code").value(StatusCode.NOT_FOUND))
+                .andExpect(jsonPath("$.message").value("Could not find course with Id 1250808601744904192 :("))
+                .andExpect(jsonPath("$.data").isEmpty());
+    }
+
+    @Test
+    void testDeleteCourseSuccess() throws Exception {
+
+        doNothing().when(this.courseService).delete(1L);
+
+        this.mockMvc.perform(delete("/api/v1/courses/1").accept(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.flag").value(true))
+                .andExpect(jsonPath("$.code").value(StatusCode.SUCCESS))
+                .andExpect(jsonPath("$.message").value("Delete Success"))
+                .andExpect(jsonPath("$.data").isEmpty());
+    }
+
+    @Test
+    void deleteCourseErrorWithNonExistentId() throws Exception {
+
+        doThrow(new ObjectNotFoundException("course", 1L)).when(this.courseService).delete(1L);
+
+
+        this.mockMvc.perform(delete("/api/v1/courses/1").accept(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.flag").value(false))
+                .andExpect(jsonPath("$.code").value(StatusCode.NOT_FOUND))
+                .andExpect(jsonPath("$.message").value("Could not find course with Id 1 :("))
+                .andExpect(jsonPath("$.data").isEmpty());
+    }
+
+
 }
 
 
