@@ -49,9 +49,10 @@ public class CourseController {
        Course updatedCourse = this.courseService.updateCourse(courseId, update);
        CourseDto updatedCourseDto = this.courseToCourseDtoConverter.convert(updatedCourse);
 
-        return new Result(true, StatusCode.SUCCESS, "Update Sucsess",updatedCourseDto);
+        return new Result(true, StatusCode.SUCCESS, "Update Success",updatedCourseDto);
 
     }
+    @DeleteMapping("{courseId}")
     public Result deleteCourse(@PathVariable Long courseId){
         this.courseService.delete(courseId);
         return new Result(true, StatusCode.SUCCESS,"Delete Success");

@@ -13,3 +13,7 @@ INSERT INTO TOPIC(title, message, created_at, status, user_id, course_id) VALUES
 INSERT INTO TOPIC(title, message, created_at, status, user_id, course_id) VALUES('Dúvida', 'Erro ao criar projeto', '2019-05-05 18:00:00', ' NOT_ANSWERED', 2, 2);
 INSERT INTO TOPIC(title, message, created_at, status, user_id, course_id) VALUES('Dúvida', 'Erro ao criar projeto', '2019-05-05 18:00:00', ' NOT_ANSWERED', 3, 3);
 INSERT INTO TOPIC(title, message, created_at, status, user_id, course_id) VALUES('Dúvida', 'Erro ao criar projeto', '2019-05-05 18:00:00', ' NOT_ANSWERED', 1, 1);
+
+INSERT INTO ANSWER(message, create_at, user_id, topic_id) VALUES('voce da um control', '2019-05-05 20:00:00',2, 2);
+INSERT INTO ANSWER(message, create_at, user_id, topic_id) VALUES('helo world', '2019-04-05 20:00:00',1, 2);
+INSERT INTO ANSWER(message, create_at, user_id, topic_id) VALUES('voce da um control', '2019-06-05 20:00:00',1, 3);

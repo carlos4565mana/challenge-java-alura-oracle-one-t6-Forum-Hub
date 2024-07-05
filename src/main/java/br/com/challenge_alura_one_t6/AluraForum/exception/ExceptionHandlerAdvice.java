@@ -16,9 +16,14 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class ExceptionHandlerAdvice {
+    @ExceptionHandler(ObjectNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    Result handleObjectNotFoundException(ObjectNotFoundException ex) {
+        return new Result(false, StatusCode.NOT_FOUND, ex.getMessage());
+    }
     @ExceptionHandler(CourseNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    Result hanhandlerCourseNotFoundException(CourseNotFoundException ex){
+    Result handlerCourseNotFoundException(CourseNotFoundException ex){
         return new Result(false, StatusCode.NOT_FOUND,ex.getMessage());
     }
 

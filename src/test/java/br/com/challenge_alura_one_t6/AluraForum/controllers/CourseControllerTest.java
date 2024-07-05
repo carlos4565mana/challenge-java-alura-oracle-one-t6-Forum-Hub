@@ -151,13 +151,13 @@ class CourseControllerTest {
         updatedCourse.setStatus(false);
 
 
-        given(this.courseService.updateCourse(1250808601744984197L,Mockito.any(Course.class))).willReturn(updatedCourse);
+        given(this.courseService.updateCourse(eq(1250808601744984197L),Mockito.any(Course.class))).willReturn(updatedCourse);
 
         this.mockMvc.perform(put("/api/v1/courses/1250808601744984197").contentType(MediaType.APPLICATION_JSON).content(json).accept(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.flag").value(true))
                 .andExpect(jsonPath("$.code").value(StatusCode.SUCCESS))
                 .andExpect(jsonPath("$.message").value("Update Success"))
-                .andExpect(jsonPath("$.data.id").value(1250808601744984197L))
+                .andExpect(jsonPath("$.data.id").value("1250808601744984197"))
                 .andExpect(jsonPath("$.data.name").value(updatedCourse.getName()))
                 .andExpect(jsonPath("$.data.category").value(updatedCourse.getCategory()))
                 .andExpect(jsonPath("$.data.status").value(updatedCourse.getStatus()));
