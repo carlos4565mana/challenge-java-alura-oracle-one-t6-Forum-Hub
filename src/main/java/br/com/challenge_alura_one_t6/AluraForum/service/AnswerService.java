@@ -55,7 +55,7 @@ public class AnswerService {
         return  null;
     }
 
-    public Answer updateAnswer(@Valid Long answerId, AnswerDto answerDto) {
+    public Answer updateAnswer( Long answerId, AnswerDto answerDto) {
         Optional<User> optionalUser = userRepository.findById(answerDto.userId());
         Answer answer = answerRepository.findById(answerId).orElseThrow(()->new ObjectNotFoundException("answer",answerId));
         answer.setMessage(answerDto.message());

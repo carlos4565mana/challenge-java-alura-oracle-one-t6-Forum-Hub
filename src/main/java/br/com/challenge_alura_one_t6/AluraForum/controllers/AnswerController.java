@@ -7,6 +7,7 @@ import br.com.challenge_alura_one_t6.AluraForum.exception.ObjectNotFoundExceptio
 import br.com.challenge_alura_one_t6.AluraForum.service.AnswerService;
 import br.com.challenge_alura_one_t6.AluraForum.system.Result;
 import br.com.challenge_alura_one_t6.AluraForum.system.StatusCode;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,7 +40,7 @@ public class AnswerController {
 
     }
     @PostMapping
-    public Result postAnswer(@RequestBody AnswerDto answerDto){
+    public Result postAnswer(@Valid @RequestBody AnswerDto answerDto){
         Answer answer = answerService.saveAnswer(answerDto);
         if(answer==null)throw new ObjectNotFoundException("user or topic",0L);
         AnswerDtoResponse answerDtoResponse = new AnswerDtoResponse(answer);
@@ -48,7 +49,7 @@ public class AnswerController {
     }
 
     @PutMapping("{answerId}")
-    public Result updateAnswer(@PathVariable Long answerId, @RequestBody AnswerDto answerDto){
+    public Result updateAnswer(@PathVariable Long answerId, @Valid @RequestBody AnswerDto answerDto){
         Answer answer = answerService.updateAnswer(answerId,answerDto);
         if(answer==null)throw new ObjectNotFoundException("user",answerDto.userId());
         AnswerDtoResponse answerDtoResponse = new AnswerDtoResponse(answer);
