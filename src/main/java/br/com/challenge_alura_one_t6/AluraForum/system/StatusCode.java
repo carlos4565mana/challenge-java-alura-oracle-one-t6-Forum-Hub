@@ -3,6 +3,7 @@ package br.com.challenge_alura_one_t6.AluraForum.system;
 public class StatusCode {
 
     public static final int SUCCESS = 200; // Success
+    public static  final int NO_CONTENT = 204;
 
     public static final int INVALID_ARGUMENT = 400; // Bad request, e.g., invalid parameters
 

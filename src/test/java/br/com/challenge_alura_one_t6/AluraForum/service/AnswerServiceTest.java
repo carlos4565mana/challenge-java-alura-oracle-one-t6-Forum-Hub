@@ -7,6 +7,7 @@ import br.com.challenge_alura_one_t6.AluraForum.entities.User;
 import br.com.challenge_alura_one_t6.AluraForum.enums.TopicStatus;
 import br.com.challenge_alura_one_t6.AluraForum.exception.ObjectNotFoundException;
 import br.com.challenge_alura_one_t6.AluraForum.repositorie.AnswerRepository;
+import br.com.challenge_alura_one_t6.AluraForum.utils.IdWorker;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,6 +33,8 @@ import static org.mockito.Mockito.verify;
 class AnswerServiceTest {
     @Mock
     AnswerRepository answerRepository;
+    @Mock
+    IdWorker idWorker;
     @InjectMocks
     AnswerService answerService;
     List<Answer> answerList;

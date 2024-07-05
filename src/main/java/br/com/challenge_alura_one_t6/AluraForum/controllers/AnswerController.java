@@ -1,7 +1,9 @@
 package br.com.challenge_alura_one_t6.AluraForum.controllers;
 
+import br.com.challenge_alura_one_t6.AluraForum.dtos.AnswerDto;
 import br.com.challenge_alura_one_t6.AluraForum.dtos.AnswerDtoResponse;
 import br.com.challenge_alura_one_t6.AluraForum.entities.Answer;
+import br.com.challenge_alura_one_t6.AluraForum.exception.ObjectNotFoundException;
 import br.com.challenge_alura_one_t6.AluraForum.service.AnswerService;
 import br.com.challenge_alura_one_t6.AluraForum.system.Result;
 import br.com.challenge_alura_one_t6.AluraForum.system.StatusCode;
@@ -34,16 +36,31 @@ public class AnswerController {
         AnswerDtoResponse answerDtoResponse = new AnswerDtoResponse(answer);
 
         return  new Result(true, StatusCode.SUCCESS,"Find One Success",answerDtoResponse);
+
+    }
+    @PostMapping
+    public Result postAnswer(@RequestBody AnswerDto answerDto){
+        Answer answer = answerService.saveAnswer(answerDto);
+        if(answer==null)throw new ObjectNotFoundException("user or topic",0L);
+        AnswerDtoResponse answerDtoResponse = new AnswerDtoResponse(answer);
+        return new Result(true,StatusCode.SUCCESS,"Add Success",answerDtoResponse);
+
     }
 
     @PutMapping("{answerId}")
-    public Result updateAnswer(@PathVariable Long answerId){
-        return null;
+    public Result updateAnswer(@PathVariable Long answerId, @RequestBody AnswerDto answerDto){
+        Answer answer = answerService.updateAnswer(answerId,answerDto);
+        if(answer==null)throw new ObjectNotFoundException("user",answerDto.userId());
+        AnswerDtoResponse answerDtoResponse = new AnswerDtoResponse(answer);
+        return new Result(true,StatusCode.SUCCESS,"Update Success",answerDtoResponse);
+
     }
 
     @DeleteMapping("{answerId}")
     public Result deleteAnswer(@PathVariable Long answerId){
-        return  null;
+        answerService.deleteAnswer(answerId);
+
+        return  new Result(true, StatusCode.NO_CONTENT,"Delete Success");
     }
 
 }
