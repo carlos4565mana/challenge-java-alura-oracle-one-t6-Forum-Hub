@@ -10,6 +10,9 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Data
 public class Topic implements Serializable {
@@ -33,12 +36,13 @@ public class Topic implements Serializable {
     private TopicStatus status = TopicStatus.NOT_SOLVED;
 
 
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "course_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Course course;
+
+
 }
 
 

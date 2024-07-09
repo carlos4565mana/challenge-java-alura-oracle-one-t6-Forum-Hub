@@ -39,7 +39,7 @@ public class CourseService {
     return this.courseRepository.findById(courseId).map(
                oldCourse ->{
                    oldCourse.setCategory(update.getCategory());
-                   oldCourse.setStatus(update.getStatus());
+                   oldCourse.setEnabled(update.isEnabled());
                    oldCourse.setName(update.getName());
                    return this.courseRepository.save(oldCourse);
                }

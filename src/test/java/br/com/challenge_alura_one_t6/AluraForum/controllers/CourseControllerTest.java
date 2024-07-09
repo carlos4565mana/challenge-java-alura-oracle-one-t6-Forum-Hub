@@ -52,21 +52,21 @@ class CourseControllerTest {
         course.setId(1L);
         course.setName("Java");
         course.setCategory("Programação");
-        course.setStatus(true);
+        course.setEnabled(true);
         this.courses.add(course);
 
         Course course1 = new Course();
         course1.setId(2L);
         course1.setName("React");
         course1.setCategory("Programação");
-        course1.setStatus(true);
+        course1.setEnabled(true);
         this.courses.add(course1);
 
         Course course2 = new Course();
         course2.setId(3L);
         course2.setName("Postgres");
         course2.setCategory("Banco de Dados");
-        course2.setStatus(true);
+        course2.setEnabled(true);
         this.courses.add(course2);
     }
 
@@ -84,7 +84,7 @@ class CourseControllerTest {
                 .andExpect(jsonPath("$.data.id").value(1))
                 .andExpect(jsonPath("$.data.name").value("Java"))
                 .andExpect(jsonPath("$.data.category").value("Programação"))
-                .andExpect(jsonPath("$.data.status").value(true));
+                .andExpect(jsonPath("$.data.enabled").value(true));
     }
 
     @Test
@@ -107,15 +107,15 @@ class CourseControllerTest {
                 .andExpect(jsonPath("$.data[0].id").value(1))
                 .andExpect(jsonPath("$.data[0].name").value("Java"))
                 .andExpect(jsonPath("$.data[0].category").value("Programação"))
-                .andExpect(jsonPath("$.data[0].status").value(true))
+                .andExpect(jsonPath("$.data[0].enabled").value(true))
                 .andExpect(jsonPath("$.data[1].id").value(2))
                 .andExpect(jsonPath("$.data[1].name").value("React"))
                 .andExpect(jsonPath("$.data[1].category").value("Programação"))
-                .andExpect(jsonPath("$.data[1].status").value(true))
+                .andExpect(jsonPath("$.data[1].enabled").value(true))
                 .andExpect(jsonPath("$.data[2].id").value(3))
                 .andExpect(jsonPath("$.data[2].name").value("Postgres"))
                 .andExpect(jsonPath("$.data[2].category").value("Banco de Dados"))
-                .andExpect(jsonPath("$.data[2].status").value(true));
+                .andExpect(jsonPath("$.data[2].enabled").value(true));
 
     }
     @Test
@@ -126,7 +126,7 @@ class CourseControllerTest {
         savedCourse.setId(1250808601744984197L);
         savedCourse.setName("Python");
         savedCourse.setCategory("Programação");
-        savedCourse.setStatus(true);
+        savedCourse.setEnabled(true);
         given(courseService.save(Mockito.any(Course.class))).willReturn(savedCourse);
 
         this.mockMvc.perform(post("/api/v1/courses").contentType(MediaType.APPLICATION_JSON).content(json).accept(MediaType.APPLICATION_JSON))
@@ -136,7 +136,7 @@ class CourseControllerTest {
                 .andExpect(jsonPath("$.data.id").isNotEmpty())
                 .andExpect(jsonPath("$.data.name").value(savedCourse.getName()))
                 .andExpect(jsonPath("$.data.category").value(savedCourse.getCategory()))
-                .andExpect(jsonPath("$.data.status").value(savedCourse.getStatus()));
+                .andExpect(jsonPath("$.data.enabled").value(savedCourse.isEnabled()));
 
     }
     @Test
@@ -148,7 +148,7 @@ class CourseControllerTest {
         updatedCourse.setId(1250808601744984197L);
         updatedCourse.setName("C++");
         updatedCourse.setCategory("Programação");
-        updatedCourse.setStatus(false);
+        updatedCourse.setEnabled(false);
 
 
         given(this.courseService.updateCourse(eq(1250808601744984197L),Mockito.any(Course.class))).willReturn(updatedCourse);
@@ -160,7 +160,7 @@ class CourseControllerTest {
                 .andExpect(jsonPath("$.data.id").value("1250808601744984197"))
                 .andExpect(jsonPath("$.data.name").value(updatedCourse.getName()))
                 .andExpect(jsonPath("$.data.category").value(updatedCourse.getCategory()))
-                .andExpect(jsonPath("$.data.status").value(updatedCourse.getStatus()));
+                .andExpect(jsonPath("$.data.enabled").value(updatedCourse.isEnabled()));
 
     }
     @Test

@@ -44,21 +44,21 @@ class CourseServiceTest {
         course.setId(1L);
         course.setName("Java");
         course.setCategory("Programação");
-        course.setStatus(true);
+        course.setEnabled(true);
         this.courseList.add(course);
 
         Course course1 = new Course();
         course1.setId(2L);
         course1.setName("React");
         course1.setCategory("Programação");
-        course1.setStatus(true);
+        course1.setEnabled(true);
         this.courseList.add(course1);
 
         Course course2 = new Course();
         course2.setId(3L);
         course2.setName("Postgres");
         course2.setCategory("Banco de Dados");
-        course2.setStatus(true);
+        course2.setEnabled(true);
         this.courseList.add(course2);
     }
 
@@ -72,7 +72,7 @@ class CourseServiceTest {
         course.setId(1L);
         course.setName("Carlos");
         course.setCategory("Programação");
-        course.setStatus(true);
+        course.setEnabled(true);
 
 
 
@@ -83,7 +83,7 @@ class CourseServiceTest {
         assertThat(returnedCourse.getId()).isEqualTo(course.getId());
         assertThat(returnedCourse.getName()).isEqualTo(course.getName());
         assertThat(returnedCourse.getCategory()).isEqualTo(course.getCategory());
-        assertThat(returnedCourse.getStatus()).isEqualTo(course.getStatus());
+        assertThat(returnedCourse.isEnabled()).isEqualTo(course.isEnabled());
 
         verify(courseRepository,times(1)).findById(1L);
 
@@ -114,14 +114,14 @@ class CourseServiceTest {
         Course newCourse = new Course();
         newCourse.setName("Rubi");
         newCourse.setCategory("Programação");
-        newCourse.setStatus(true);
+        newCourse.setEnabled(true);
         given(idWorker.nextId()).willReturn(123456L);
         given(courseRepository.save(newCourse)).willReturn(newCourse);
         Course savedCourse =  courseService.save(newCourse);
         assertThat(savedCourse.getId()).isEqualTo(123456L);
         assertThat(savedCourse.getName()).isEqualTo(newCourse.getName());
         assertThat(savedCourse.getCategory()).isEqualTo(newCourse.getCategory());
-        assertThat(savedCourse.getStatus()).isEqualTo(newCourse.getStatus());
+        assertThat(savedCourse.isEnabled()).isEqualTo(newCourse.isEnabled());
         verify(courseRepository, times(1)).save(newCourse);
     }
     @Test
@@ -130,13 +130,13 @@ class CourseServiceTest {
         oldCourse.setId(1L);
         oldCourse.setName("Java");
         oldCourse.setCategory("Programação");
-        oldCourse.setStatus(true);
+        oldCourse.setEnabled(true);
 
         Course updateCourse = new Course();
         updateCourse.setId(1L);
         updateCourse.setName("Java");
         updateCourse.setCategory("Programação");
-        updateCourse.setStatus(false);
+        updateCourse.setEnabled(false);
 
         given(courseRepository.findById(1L)).willReturn(Optional.of(oldCourse));
 
@@ -147,7 +147,7 @@ class CourseServiceTest {
         assertThat(updatedCourse.getId()).isEqualTo(1L);
         assertThat(updatedCourse.getName()).isEqualTo(updatedCourse.getName());
         assertThat(updatedCourse.getCategory()).isEqualTo(updatedCourse.getCategory());
-        assertThat(updatedCourse.getStatus()).isEqualTo(updatedCourse.getStatus());
+        assertThat(updatedCourse.isEnabled()).isEqualTo(updatedCourse.isEnabled());
 
         verify(courseRepository, times(1)).findById(1L);
         verify(courseRepository, times(1)).save(oldCourse);
@@ -158,7 +158,7 @@ class CourseServiceTest {
             Course upd= new Course();
             upd.setName("Java");
             upd.setCategory("Programação");
-            upd.setStatus(false);
+            upd.setEnabled(false);
 
             given(courseRepository.findById(1L)).willReturn(Optional.empty());
 
@@ -174,7 +174,7 @@ class CourseServiceTest {
         upd1.setId(1L);
         upd1.setName("Java");
         upd1.setCategory("Programação");
-        upd1.setStatus(false);
+        upd1.setEnabled(false);
         given(courseRepository.findById(1l)).willReturn(Optional.of(upd1));
         doNothing().when(courseRepository).deleteById(1L);
 
