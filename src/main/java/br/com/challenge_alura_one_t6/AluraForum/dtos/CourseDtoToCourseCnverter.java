@@ -12,7 +12,7 @@ public class CourseDtoToCourseCnverter implements Converter<CourseDto, Course> {
         Course course = new Course();
         course.setId(source.id());
         course.setName(source.name());
-        course.setStatus(source.status());
+        course.setEnabled(source.enabled());
         course.setCategory(source.category());
         return course;
     }

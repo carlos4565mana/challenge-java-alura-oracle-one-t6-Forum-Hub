@@ -1,6 +1,7 @@
 package br.com.challenge_alura_one_t6.AluraForum.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,6 +20,11 @@ public class User implements Serializable {
     private String name;
     private String email;
     private String password;
+    private String roles;
+    private boolean enabled;
+
+
+
 
     public User(long id, String name, String email, String password) {
         this.id=id;

@@ -13,7 +13,7 @@ public class CourseToCourseDtoConverter implements Converter<Course,CourseDto> {
                 source.getId(),
                 source.getName(),
                 source.getCategory(),
-                source.getStatus()
+                source.isEnabled()
         );
         return courseDto;
     }

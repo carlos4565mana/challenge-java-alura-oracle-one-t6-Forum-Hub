@@ -20,7 +20,7 @@ public class Course implements Serializable {
     private Long id;
     private String name;
     private String category;
-    private Boolean status = true;
+    private boolean enabled = true;
 
     public Course(long id, String name, String category) {
         this.id=id;

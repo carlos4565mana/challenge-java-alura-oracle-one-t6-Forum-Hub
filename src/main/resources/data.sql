@@ -1,12 +1,12 @@
-INSERT INTO USERS( name,email, password) VALUES('Carlos', 'carlos@email.com', '123456');
-INSERT INTO USERS( name,email, password) VALUES('Cesar', 'cesar@email.com', '123456');
-INSERT INTO USERS( name,email, password) VALUES('Alana', 'alana@email.com', '123456');
-INSERT INTO USERS( name,email, password) VALUES('Daiane', 'daiane@email.com', '123456');
+INSERT INTO USERS( name,email, password,enabled,roles) VALUES('Carlos', 'carlos@email.com', '7c4a8d09ca3762af61e59520943dc26494f8941b',true,'admin user');
+INSERT INTO USERS( name,email, password,enabled,roles) VALUES('Cesar', 'cesar@email.com', '7c4a8d09ca3762af61e59520943dc26494f8941b',true,'user');
+INSERT INTO USERS( name,email, password,enabled,roles) VALUES('Alana', 'alana@email.com', '7c4a8d09ca3762af61e59520943dc26494f8941b',true,'user');
+INSERT INTO USERS( name,email, password,enabled,roles) VALUES('Daiane', 'daiane@email.com', '7c4a8d09ca3762af61e59520943dc26494f8941b',true,'user');
 
-INSERT INTO COURSE(category, name,status) VALUES('Programacao','React','true');
-INSERT INTO COURSE(category, name,status ) VALUES('Linguas','Ingles','true');
-INSERT INTO COURSE(category, name,status) VALUES('Banco de Dados','Postgres','true');
-INSERT INTO COURSE(category, name,status) VALUES('Programacao','Java','true');
+INSERT INTO COURSE(category, name,enabled) VALUES('Programacao','React','true');
+INSERT INTO COURSE(category, name,enabled ) VALUES('Linguas','Ingles','true');
+INSERT INTO COURSE(category, name,enabled) VALUES('Banco de Dados','Postgres','true');
+INSERT INTO COURSE(category, name,enabled) VALUES('Programacao','Java','true');
 
 
 INSERT INTO TOPIC(title, message, created_at, status, user_id, course_id) VALUES('Dúvida', 'Erro ao criar projeto', '2019-05-05 18:00:00', ' NOT_ANSWERED', 1, 3);

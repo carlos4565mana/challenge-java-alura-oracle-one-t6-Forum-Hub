@@ -18,6 +18,7 @@ public class Answer implements Serializable {
     private String message;
 
     private LocalDateTime createAt = LocalDateTime.now();
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "topic_id", nullable = false)
     @JsonIgnore

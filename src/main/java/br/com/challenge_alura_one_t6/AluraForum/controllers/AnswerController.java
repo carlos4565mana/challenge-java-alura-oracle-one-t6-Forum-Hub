@@ -1,7 +1,7 @@
 package br.com.challenge_alura_one_t6.AluraForum.controllers;
 
 import br.com.challenge_alura_one_t6.AluraForum.dtos.AnswerDto;
-import br.com.challenge_alura_one_t6.AluraForum.dtos.AnswerDtoResponse;
+import br.com.challenge_alura_one_t6.AluraForum.dtos.AnswerResponseDto;
 import br.com.challenge_alura_one_t6.AluraForum.entities.Answer;
 import br.com.challenge_alura_one_t6.AluraForum.exception.ObjectNotFoundException;
 import br.com.challenge_alura_one_t6.AluraForum.service.AnswerService;
@@ -10,6 +10,7 @@ import br.com.challenge_alura_one_t6.AluraForum.system.StatusCode;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,8 +26,11 @@ public class AnswerController {
     @GetMapping
     public Result findAllAnswers(){
         List<Answer> foundAnswers = answerService.findAll();
-        List<AnswerDtoResponse> answerDtoResponseList = foundAnswers.stream()
-                .map(AnswerDtoResponse::new).collect(Collectors.toList());
+        List<AnswerResponseDto> answerDtoResponseList = new ArrayList<>();
+        for (Answer foundAnswer : foundAnswers) {
+            AnswerResponseDto answerResponseDto = new AnswerResponseDto(foundAnswer);
+            answerDtoResponseList.add(answerResponseDto);
+        }
 
         return new Result(true,StatusCode.SUCCESS,"Find All Success",answerDtoResponseList);
     }
@@ -34,7 +38,7 @@ public class AnswerController {
     @GetMapping("{answerId}")
     public Result findOneAnswer(@PathVariable Long answerId){
         Answer answer = answerService.findById(answerId);
-        AnswerDtoResponse answerDtoResponse = new AnswerDtoResponse(answer);
+        AnswerResponseDto answerDtoResponse = new AnswerResponseDto(answer);
 
         return  new Result(true, StatusCode.SUCCESS,"Find One Success",answerDtoResponse);
 
@@ -43,7 +47,7 @@ public class AnswerController {
     public Result postAnswer(@Valid @RequestBody AnswerDto answerDto){
         Answer answer = answerService.saveAnswer(answerDto);
         if(answer==null)throw new ObjectNotFoundException("user or topic",0L);
-        AnswerDtoResponse answerDtoResponse = new AnswerDtoResponse(answer);
+        AnswerResponseDto answerDtoResponse = new AnswerResponseDto(answer);
         return new Result(true,StatusCode.SUCCESS,"Add Success",answerDtoResponse);
 
     }
@@ -52,7 +56,7 @@ public class AnswerController {
     public Result updateAnswer(@PathVariable Long answerId, @Valid @RequestBody AnswerDto answerDto){
         Answer answer = answerService.updateAnswer(answerId,answerDto);
         if(answer==null)throw new ObjectNotFoundException("user",answerDto.userId());
-        AnswerDtoResponse answerDtoResponse = new AnswerDtoResponse(answer);
+        AnswerResponseDto answerDtoResponse = new AnswerResponseDto(answer);
         return new Result(true,StatusCode.SUCCESS,"Update Success",answerDtoResponse);
 
     }
