@@ -49,8 +49,7 @@ public class AnswerService {
             answer.setUser(optionalUser.get());
             answer.setTopic(optionalTopic.get());
             answer.setMessage(answerDto.message());
-            Answer createdAnswer = answerRepository.save(answer);
-            return  createdAnswer;
+            return answerRepository.save(answer);
         }
         return  null;
     }
@@ -59,8 +58,7 @@ public class AnswerService {
         Optional<User> optionalUser = userRepository.findById(answerDto.userId());
         Answer answer = answerRepository.findById(answerId).orElseThrow(()->new ObjectNotFoundException("answer",answerId));
         answer.setMessage(answerDto.message());
-        Answer createdAnswer = answerRepository.save(answer);
-        return  createdAnswer;
+        return answerRepository.save(answer);
     }
 
     public void deleteAnswer(Long answerId) {

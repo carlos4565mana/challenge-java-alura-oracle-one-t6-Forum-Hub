@@ -38,7 +38,7 @@ public class TopicService {
         this.userRepository = userRepository;
     }
     public Topic addTopic(TopicDto topicDto) {
-        Course course = courseRepository.findByName(topicDto.courseName());
+        var course = courseRepository.findByName(topicDto.courseName());
         User user = userRepository.findById(1L).orElseThrow();
 
         System.out.println(course);

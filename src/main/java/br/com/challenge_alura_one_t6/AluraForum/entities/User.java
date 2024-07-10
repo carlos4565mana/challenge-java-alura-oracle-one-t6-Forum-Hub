@@ -1,5 +1,6 @@
 package br.com.challenge_alura_one_t6.AluraForum.entities;
 
+import br.com.challenge_alura_one_t6.AluraForum.enums.UserRole;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -20,9 +21,9 @@ public class User implements Serializable {
     private String name;
     private String email;
     private String password;
-    private String roles;
-    private boolean enabled;
 
+    @Enumerated(EnumType.STRING)
+    private UserRole userRole;
 
 
 
