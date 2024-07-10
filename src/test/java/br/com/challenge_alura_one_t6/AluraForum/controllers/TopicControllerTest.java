@@ -44,7 +44,7 @@ class TopicControllerTest {
                 .andExpect(jsonPath("$.flag").value(true))
                 .andExpect(jsonPath("$.code").value(StatusCode.SUCCESS))
                 .andExpect(jsonPath("$.message").value("Find One Success"))
-                .andExpect(jsonPath("$.data.id").value(1))
+                .andExpect(jsonPath("$.data.id").value(1L))
                 .andExpect(jsonPath("$.data.authorName").value("Carlos"))
                 .andExpect(jsonPath("$.data.title").value("Dúvida"));
 
@@ -90,10 +90,10 @@ class TopicControllerTest {
     }
     @Test
     void deleteMotFoundId() throws Exception {
-        mockMvc.perform(get("/api/v1/topics/8").accept(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/api/v1/topics/7").accept(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.flag").value(false))
                 .andExpect(jsonPath("$.code").value(StatusCode.NOT_FOUND))
-                .andExpect(jsonPath("$.message").value("Could not find topic with Id 8 :("))
+                .andExpect(jsonPath("$.message").value("Could not find topic with Id 7 :("))
                 .andExpect(jsonPath("$.data").isEmpty());
 
     }

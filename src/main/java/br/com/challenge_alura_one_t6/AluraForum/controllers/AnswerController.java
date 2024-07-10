@@ -26,11 +26,7 @@ public class AnswerController {
     @GetMapping
     public Result findAllAnswers(){
         List<Answer> foundAnswers = answerService.findAll();
-        List<AnswerResponseDto> answerDtoResponseList = new ArrayList<>();
-        for (Answer foundAnswer : foundAnswers) {
-            AnswerResponseDto answerResponseDto = new AnswerResponseDto(foundAnswer);
-            answerDtoResponseList.add(answerResponseDto);
-        }
+        List<AnswerResponseDto> answerDtoResponseList = foundAnswers.stream().map(AnswerResponseDto::new).collect(Collectors.toList());
 
         return new Result(true,StatusCode.SUCCESS,"Find All Success",answerDtoResponseList);
     }
