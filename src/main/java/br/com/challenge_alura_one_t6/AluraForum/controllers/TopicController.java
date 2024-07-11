@@ -8,14 +8,19 @@ import br.com.challenge_alura_one_t6.AluraForum.entities.Topic;
 import br.com.challenge_alura_one_t6.AluraForum.service.TopicService;
 import br.com.challenge_alura_one_t6.AluraForum.system.Result;
 import br.com.challenge_alura_one_t6.AluraForum.system.StatusCode;
+import br.com.challenge_alura_one_t6.AluraForum.utils.IAuthenticationFacade;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/v1/topics")
 public class TopicController {
+    //@Autowired
+    //private IAuthenticationFacade authenticationFacade;
     private final TopicService topicService;
 
     public TopicController(TopicService topicService) {
@@ -30,6 +35,8 @@ public class TopicController {
 
     @PostMapping
     public Result addTopic(@RequestBody @Valid TopicDto topicDto){
+        //Authentication authentication = authenticationFacade.getAuthentication();
+        //System.out.println("Athentication "+authentication.getName());
         Topic topic = topicService.addTopic(topicDto);
         TopicoResponseDto topicDtoResponse = new TopicoResponseDto(topic);
         return new Result(true,StatusCode.SUCCESS,"Add Success",topicDtoResponse);

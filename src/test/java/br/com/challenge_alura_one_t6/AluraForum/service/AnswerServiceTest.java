@@ -6,7 +6,7 @@ import br.com.challenge_alura_one_t6.AluraForum.entities.Topic;
 import br.com.challenge_alura_one_t6.AluraForum.entities.User;
 import br.com.challenge_alura_one_t6.AluraForum.enums.TopicStatus;
 import br.com.challenge_alura_one_t6.AluraForum.exception.ObjectNotFoundException;
-import br.com.challenge_alura_one_t6.AluraForum.repositorie.AnswerRepository;
+import br.com.challenge_alura_one_t6.AluraForum.repositories.AnswerRepository;
 import br.com.challenge_alura_one_t6.AluraForum.utils.IdWorker;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,7 +25,6 @@ import static org.mockito.BDDMockito.given;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 

@@ -2,7 +2,7 @@ package br.com.challenge_alura_one_t6.AluraForum.service;
 
 import br.com.challenge_alura_one_t6.AluraForum.entities.User;
 import br.com.challenge_alura_one_t6.AluraForum.exception.ObjectNotFoundException;
-import br.com.challenge_alura_one_t6.AluraForum.repositorie.UserRepository;
+import br.com.challenge_alura_one_t6.AluraForum.repositories.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
