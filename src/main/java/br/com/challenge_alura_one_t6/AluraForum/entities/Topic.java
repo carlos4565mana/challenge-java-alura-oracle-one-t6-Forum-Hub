@@ -33,7 +33,7 @@ public class Topic implements Serializable {
     private User user;
 
     @Enumerated(EnumType.STRING)
-    private TopicStatus status = TopicStatus.NOT_SOLVED;
+    private TopicStatus status = TopicStatus.NOT_ANSWERED;
 
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

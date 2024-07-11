@@ -1,7 +1,6 @@
-INSERT INTO USERS( name,email, password,enabled,roles) VALUES('Carlos', 'carlos@email.com', '7c4a8d09ca3762af61e59520943dc26494f8941b',true,'admin user');
-INSERT INTO USERS( name,email, password,enabled,roles) VALUES('Cesar', 'cesar@email.com', '7c4a8d09ca3762af61e59520943dc26494f8941b',true,'user');
-INSERT INTO USERS( name,email, password,enabled,roles) VALUES('Alana', 'alana@email.com', '7c4a8d09ca3762af61e59520943dc26494f8941b',true,'user');
-INSERT INTO USERS( name,email, password,enabled,roles) VALUES('Daiane', 'daiane@email.com', '7c4a8d09ca3762af61e59520943dc26494f8941b',true,'user');
+INSERT INTO USERS( name,email, password,role) VALUES('Carlos', 'carlos@email.com', '$2a$10$.K8Ol9zpsQ5prA8HGFyQLO2EbbbjGTiGKvowsYzUvFvD.bdAAlVma','ADMIN');
+INSERT INTO USERS( name,email, password,role) VALUES('Cesar', 'cesar@email.com', '$2a$10$.K8Ol9zpsQ5prA8HGFyQLO2EbbbjGTiGKvowsYzUvFvD.bdAAlVma','USER');
+
 
 INSERT INTO COURSE(category, name,enabled) VALUES('Programacao','React','true');
 INSERT INTO COURSE(category, name,enabled ) VALUES('Linguas','Ingles','true');

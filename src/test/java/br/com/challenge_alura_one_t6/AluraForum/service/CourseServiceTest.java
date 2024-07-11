@@ -3,7 +3,7 @@ package br.com.challenge_alura_one_t6.AluraForum.service;
 import br.com.challenge_alura_one_t6.AluraForum.entities.Course;
 import br.com.challenge_alura_one_t6.AluraForum.exception.CourseNotFoundException;
 import br.com.challenge_alura_one_t6.AluraForum.exception.ObjectNotFoundException;
-import br.com.challenge_alura_one_t6.AluraForum.repositorie.CourseRepository;
+import br.com.challenge_alura_one_t6.AluraForum.repositories.CourseRepository;
 import br.com.challenge_alura_one_t6.AluraForum.utils.IdWorker;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
