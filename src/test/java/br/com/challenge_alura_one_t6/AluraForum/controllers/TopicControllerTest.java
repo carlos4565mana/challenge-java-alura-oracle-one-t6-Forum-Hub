@@ -8,6 +8,7 @@ import br.com.challenge_alura_one_t6.AluraForum.enums.TopicStatus;
 import br.com.challenge_alura_one_t6.AluraForum.system.StatusCode;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.json.JSONObject;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,26 +17,35 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.http.HttpHeaders;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(addFilters = false)
+@ActiveProfiles(value = "test")
+
 class TopicControllerTest {
     @Autowired
     MockMvc mockMvc;
     @Autowired
     ObjectMapper objectMapper;
 
+    String token;
+
 
 
 
     @BeforeEach
-    void setUp() {
-
+    void setUp() throws Exception {
 
     }
     @Test
@@ -66,7 +76,7 @@ class TopicControllerTest {
 
             String json = objectMapper.writeValueAsString(topicDto);
 
-            mockMvc.perform(post("/api/v1/topics").contentType(MediaType.APPLICATION_JSON).content(json).accept(MediaType.APPLICATION_JSON))
+            mockMvc.perform(post("/api/v1/topics").contentType(MediaType.APPLICATION_JSON).content(json).accept(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION,token))
                     .andExpect(jsonPath("$.flag").value(true))
                     .andExpect(jsonPath("$.code").value(StatusCode.SUCCESS))
                     .andExpect(jsonPath("$.message").value("Add Success"))

@@ -31,12 +31,11 @@ public class User implements UserDetails {
 
 
 
-    public User( String name, String email, String password, UserRole role) {
+    public User(String name, String email, String password, UserRole role) {
         this.email=email;
         this.password=password;
         this.name=name;
         this.role = role;
-
     }
 
     @Override

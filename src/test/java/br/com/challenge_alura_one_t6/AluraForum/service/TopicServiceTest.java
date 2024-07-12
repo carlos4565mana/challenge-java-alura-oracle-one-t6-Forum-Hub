@@ -5,6 +5,7 @@ import br.com.challenge_alura_one_t6.AluraForum.entities.Course;
 import br.com.challenge_alura_one_t6.AluraForum.entities.Topic;
 import br.com.challenge_alura_one_t6.AluraForum.entities.User;
 import br.com.challenge_alura_one_t6.AluraForum.enums.TopicStatus;
+import br.com.challenge_alura_one_t6.AluraForum.enums.UserRole;
 import br.com.challenge_alura_one_t6.AluraForum.exception.ObjectNotFoundException;
 import br.com.challenge_alura_one_t6.AluraForum.repositories.AnswerRepository;
 import br.com.challenge_alura_one_t6.AluraForum.repositories.TopicRepository;
@@ -51,7 +52,7 @@ class TopicServiceTest {
         //Given
 
         Course course = new Course(12L,"React","Programação",true);
-        User user = new  User(123L,"Carlos","car@gmail.com","1232");
+        User user = new  User(123L,"Carlos","car@gmail.com","1232", UserRole.USER);
         Topic topic = new Topic();
         topic.setCourse(course);
         topic.setUser(user);

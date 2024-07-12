@@ -1,5 +1,6 @@
 package br.com.challenge_alura_one_t6.AluraForum.service;
 
+import br.com.challenge_alura_one_t6.AluraForum.dtos.UserUpdateDto;
 import br.com.challenge_alura_one_t6.AluraForum.entities.User;
 import br.com.challenge_alura_one_t6.AluraForum.exception.ObjectNotFoundException;
 import br.com.challenge_alura_one_t6.AluraForum.repositories.UserRepository;
@@ -31,5 +32,14 @@ public class UserService {
     public User findById(Long userId) {
         return this.userRepository.findById(userId)
                 .orElseThrow(() -> new ObjectNotFoundException("user", userId));
+    }
+
+    public User updateUser(Long userId, UserUpdateDto userUpdateDto) {
+        User oldUser = userRepository.findById(userId)
+                .orElseThrow(()->new ObjectNotFoundException("user",userId));
+        oldUser.setEmail(userUpdateDto.email());
+        oldUser.setRole(userUpdateDto.userRole());
+        oldUser.setName(userUpdateDto.name());
+        return  userRepository.save(oldUser);
     }
 }

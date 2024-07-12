@@ -59,7 +59,7 @@ public class AnswerService {
         var emailUser = authenticationFacade.getAuthentication().getName();
         Answer answer = answerRepository.findById(answerId).orElseThrow(()->new ObjectNotFoundException("answer",answerId));
         var email = answer.getUser().getEmail();
-        if(emailUser != email)throw  new ObjectNotFoundException("Esta resposta não te pertence", answerId);
+        if(emailUser != email)throw  new ObjectNotFoundException("This answer doesn't belong to you!", answerId);
         answer.setMessage(answerDto.message());
         return answerRepository.save(answer);
     }
@@ -68,7 +68,7 @@ public class AnswerService {
         var emailUser = authenticationFacade.getAuthentication().getName();
         Answer answer = answerRepository.findById(answerId).orElseThrow(()->new ObjectNotFoundException("answer",answerId));
         var email = answer.getUser().getEmail();
-        if(emailUser != email) throw  new ObjectNotFoundException("Voce não pode deletar este recurso",answerId);
+        if(emailUser != email) throw  new ObjectNotFoundException("This answer doesn't belong to you!",answerId);
         answerRepository.deleteById(answerId);
     }
 }

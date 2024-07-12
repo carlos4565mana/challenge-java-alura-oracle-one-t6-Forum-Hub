@@ -19,8 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("api/v1/topics")
 public class TopicController {
-    //@Autowired
-    //private IAuthenticationFacade authenticationFacade;
+
     private final TopicService topicService;
 
     public TopicController(TopicService topicService) {
@@ -34,9 +33,7 @@ public class TopicController {
     }
 
     @PostMapping
-    public Result addTopic(@RequestBody @Valid TopicDto topicDto){
-        //Authentication authentication = authenticationFacade.getAuthentication();
-        //System.out.println("Athentication "+authentication.getName());
+    public Result addTopic(@Valid @RequestBody TopicDto topicDto){
         Topic topic = topicService.addTopic(topicDto);
         TopicoResponseDto topicDtoResponse = new TopicoResponseDto(topic);
         return new Result(true,StatusCode.SUCCESS,"Add Success",topicDtoResponse);
@@ -53,7 +50,7 @@ public class TopicController {
     }
 
     @PutMapping("{topicId}")
-    public Result updateTopic(@PathVariable Long topicId,@RequestBody @Valid TopicDto topicDto ){
+    public Result updateTopic(@PathVariable Long topicId,@Valid @RequestBody TopicDto topicDto ){
         Topic topic = topicService.updateTopic(topicId, topicDto);
         TopicoResponseDto topicDtoResponse = new TopicoResponseDto(topic);
         return new Result(true,StatusCode.SUCCESS,"Add Success",topicDtoResponse);

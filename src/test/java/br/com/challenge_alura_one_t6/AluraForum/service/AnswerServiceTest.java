@@ -5,6 +5,7 @@ import br.com.challenge_alura_one_t6.AluraForum.entities.Course;
 import br.com.challenge_alura_one_t6.AluraForum.entities.Topic;
 import br.com.challenge_alura_one_t6.AluraForum.entities.User;
 import br.com.challenge_alura_one_t6.AluraForum.enums.TopicStatus;
+import br.com.challenge_alura_one_t6.AluraForum.enums.UserRole;
 import br.com.challenge_alura_one_t6.AluraForum.exception.ObjectNotFoundException;
 import br.com.challenge_alura_one_t6.AluraForum.repositories.AnswerRepository;
 import br.com.challenge_alura_one_t6.AluraForum.utils.IdWorker;
@@ -43,8 +44,8 @@ class AnswerServiceTest {
         answerList = new ArrayList<>();
         Course course1 = new Course(12L,"React","Programação");
 
-        User user = new  User(123L,"Carlos","car@gmail.com","1232");
-        User user1 = new  User(124L,"Rosa","rosa@gmail.com","12232");
+        User user = new  User(123L,"Carlos","car@gmail.com","1232", UserRole.USER);
+        User user1 = new  User(124L,"Rosa","rosa@gmail.com","12232",UserRole.USER);
 
         Topic topic = new Topic();
         topic.setUser(user);
@@ -78,7 +79,7 @@ class AnswerServiceTest {
     void findByIdSuccess() {
         //given
         Course course = new Course(12L,"React","Programação");
-        User user = new  User(123L,"Carlos","car@gmail.com","1232");
+        User user = new  User(123L,"Carlos","car@gmail.com","1232",UserRole.USER);
         Topic topic = new Topic();
         topic.setUser(user);
         topic.setCourse(course);

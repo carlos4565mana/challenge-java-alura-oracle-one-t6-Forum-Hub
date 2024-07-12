@@ -5,12 +5,14 @@ import br.com.challenge_alura_one_t6.AluraForum.dtos.LoginResponseDto;
 import br.com.challenge_alura_one_t6.AluraForum.dtos.RegisterDto;
 import br.com.challenge_alura_one_t6.AluraForum.dtos.UserResponseDto;
 import br.com.challenge_alura_one_t6.AluraForum.entities.User;
+import br.com.challenge_alura_one_t6.AluraForum.enums.UserRole;
 import br.com.challenge_alura_one_t6.AluraForum.exception.ObjectNotFoundException;
 import br.com.challenge_alura_one_t6.AluraForum.repositories.UserRepository;
 import br.com.challenge_alura_one_t6.AluraForum.security.TokenService;
 //import org.apache.catalina.core.ApplicationContext;
 import br.com.challenge_alura_one_t6.AluraForum.system.Result;
 import br.com.challenge_alura_one_t6.AluraForum.system.StatusCode;
+import jakarta.validation.Valid;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -49,10 +51,10 @@ public class AuthorizationService implements UserDetailsService {
 
     }
 
-    public Object register(RegisterDto registerDto) {
+    public Object register( RegisterDto registerDto) {
         if(this.userRepository.findByEmail(registerDto.email())!=null)throw new ObjectNotFoundException("email is already registered",0L);
         String encryptedPassword = new BCryptPasswordEncoder().encode(registerDto.password());
-        User newUser = new User(registerDto.name(), registerDto.email(),encryptedPassword, registerDto.role());
+        User newUser = new User(registerDto.name(), registerDto.email(),encryptedPassword, UserRole.USER);
         var savedUser =   userRepository.save(newUser);
         return new UserResponseDto(savedUser);
     }

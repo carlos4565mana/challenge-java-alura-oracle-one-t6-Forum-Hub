@@ -5,6 +5,7 @@ import br.com.challenge_alura_one_t6.AluraForum.entities.Course;
 import br.com.challenge_alura_one_t6.AluraForum.entities.Topic;
 import br.com.challenge_alura_one_t6.AluraForum.entities.User;
 import br.com.challenge_alura_one_t6.AluraForum.enums.TopicStatus;
+import br.com.challenge_alura_one_t6.AluraForum.enums.UserRole;
 import br.com.challenge_alura_one_t6.AluraForum.exception.ObjectNotFoundException;
 import br.com.challenge_alura_one_t6.AluraForum.service.AnswerService;
 import br.com.challenge_alura_one_t6.AluraForum.system.StatusCode;
@@ -17,6 +18,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;   //get
@@ -27,7 +29,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(addFilters = false)
+@ActiveProfiles(value = "test")
+
 class AnswerControllerTest {
     @Autowired
     MockMvc mockMvc;
@@ -41,8 +45,8 @@ class AnswerControllerTest {
 
         Course course1 = new Course(12L,"React","Programação");
 
-        User user = new  User(123L,"Carlos","car@gmail.com","1232");
-        User user1 = new  User(124L,"Rosa","rosa@gmail.com","12232");
+        User user = new  User("Carlos","car@gmail.com","123", UserRole.USER);
+        User user1 = new  User("Rosa","rosa@gmail.com","123",UserRole.USER);
 
         Topic topic = new Topic();
         topic.setUser(user);

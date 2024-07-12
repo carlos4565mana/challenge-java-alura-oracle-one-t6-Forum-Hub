@@ -6,19 +6,16 @@ import br.com.challenge_alura_one_t6.AluraForum.dtos.TopicDto;
 import br.com.challenge_alura_one_t6.AluraForum.entities.Answer;
 import br.com.challenge_alura_one_t6.AluraForum.entities.Topic;
 import br.com.challenge_alura_one_t6.AluraForum.entities.User;
+import br.com.challenge_alura_one_t6.AluraForum.exception.AccessDeniedResourceException;
 import br.com.challenge_alura_one_t6.AluraForum.exception.ObjectNotFoundException;
 import br.com.challenge_alura_one_t6.AluraForum.repositories.AnswerRepository;
 import br.com.challenge_alura_one_t6.AluraForum.repositories.CourseRepository;
 import br.com.challenge_alura_one_t6.AluraForum.repositories.TopicRepository;
 import br.com.challenge_alura_one_t6.AluraForum.repositories.UserRepository;
-import br.com.challenge_alura_one_t6.AluraForum.system.Result;
-import br.com.challenge_alura_one_t6.AluraForum.system.StatusCode;
 import br.com.challenge_alura_one_t6.AluraForum.utils.IAuthenticationFacade;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -80,7 +77,7 @@ public class TopicService {
         var topic = topicRepository.findById(topicId).orElseThrow(()->new ObjectNotFoundException("topic", topicId));
         var email = topic.getUser().getEmail();
 
-        if(emailUser != email)throw  new ObjectNotFoundException("Este topico não te pertence",topicId);
+        if(!Objects.equals(emailUser, email))throw  new AccessDeniedResourceException("This topic doesn't belong to you");
         topicRepository.deleteById(topicId);
     }
 
@@ -89,7 +86,8 @@ public class TopicService {
         var topic = topicRepository.findById(topicId).orElseThrow(()-> new ObjectNotFoundException("topic",topicId));
         var email = topic.getUser().getEmail();
 
-        if(emailUser != email)throw  new ObjectNotFoundException("Este topico não te pertence",topicId);
+        if(!Objects.equals(emailUser, email))throw  new AccessDeniedResourceException("This topic doesn't belong to you");
+
         Topic updatedTopic = new Topic();
         updatedTopic.setMessage(topicDto.message());
         updatedTopic.setTitle(topicDto.title());
