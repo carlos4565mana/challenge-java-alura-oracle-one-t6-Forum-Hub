@@ -51,7 +51,6 @@ public class AnswerController {
     @PutMapping("{answerId}")
     public Result updateAnswer(@PathVariable Long answerId, @Valid @RequestBody AnswerDto answerDto){
         Answer answer = answerService.updateAnswer(answerId,answerDto);
-        if(answer==null)throw new ObjectNotFoundException("user",answerDto.userId());
         AnswerResponseDto answerDtoResponse = new AnswerResponseDto(answer);
         return new Result(true,StatusCode.SUCCESS,"Update Success",answerDtoResponse);
 

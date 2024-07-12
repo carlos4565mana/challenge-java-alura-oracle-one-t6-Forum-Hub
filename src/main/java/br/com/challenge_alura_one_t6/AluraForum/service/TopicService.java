@@ -11,6 +11,8 @@ import br.com.challenge_alura_one_t6.AluraForum.repositories.AnswerRepository;
 import br.com.challenge_alura_one_t6.AluraForum.repositories.CourseRepository;
 import br.com.challenge_alura_one_t6.AluraForum.repositories.TopicRepository;
 import br.com.challenge_alura_one_t6.AluraForum.repositories.UserRepository;
+import br.com.challenge_alura_one_t6.AluraForum.system.Result;
+import br.com.challenge_alura_one_t6.AluraForum.system.StatusCode;
 import br.com.challenge_alura_one_t6.AluraForum.utils.IAuthenticationFacade;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
@@ -20,12 +22,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
 @Transactional
 public class TopicService {
-   // Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
     private final TopicRepository topicRepository;
     private final IAuthenticationFacade authenticationFacade;
@@ -41,12 +43,12 @@ public class TopicService {
         this.userRepository = userRepository;
     }
     public Topic addTopic(TopicDto topicDto) {
-        //System.out.println(authenticationFacade.getAuthentication().getName());
-        var name = authenticationFacade.getAuthentication().getName();
-        var course = courseRepository.findByName(topicDto.courseName());
-        User user = (User) userRepository.findByEmail(name);
 
-        if(course == null) throw new ObjectNotFoundException(topicDto.courseName(),0L);
+        var emailUser = authenticationFacade.getAuthentication().getName();
+        var course = courseRepository.findByName(topicDto.courseName());
+        User user = (User) userRepository.findByEmail(emailUser);
+
+        if(course == null) throw new ObjectNotFoundException(" the course with name : " +topicDto.courseName(),0L);
 
         Topic topic = new Topic();
         topic.setTitle(topicDto.title());
@@ -74,24 +76,24 @@ public class TopicService {
 
 
     public void deleteTopic(Long topicId){
+        var emailUser = authenticationFacade.getAuthentication().getName();
+        var topic = topicRepository.findById(topicId).orElseThrow(()->new ObjectNotFoundException("topic", topicId));
+        var email = topic.getUser().getEmail();
 
-
-        topicRepository.findById(topicId).orElseThrow(
-                ()-> new ObjectNotFoundException("topic",topicId)
-        );
+        if(emailUser != email)throw  new ObjectNotFoundException("Este topico não te pertence",topicId);
         topicRepository.deleteById(topicId);
-
-
     }
 
     public Topic updateTopic(Long topicId, TopicDto topicDto){
+        var emailUser = authenticationFacade.getAuthentication().getName();
+        var topic = topicRepository.findById(topicId).orElseThrow(()-> new ObjectNotFoundException("topic",topicId));
+        var email = topic.getUser().getEmail();
 
-        return topicRepository.findById(topicId).map(
-                oldTopic ->{
-                    oldTopic.setMessage(topicDto.message());
-                    oldTopic.setTitle(topicDto.title());
-                    return  topicRepository.save(oldTopic);
-                }).orElseThrow(()->new ObjectNotFoundException("topic",topicId));
+        if(emailUser != email)throw  new ObjectNotFoundException("Este topico não te pertence",topicId);
+        Topic updatedTopic = new Topic();
+        updatedTopic.setMessage(topicDto.message());
+        updatedTopic.setTitle(topicDto.title());
+        return topicRepository.save(updatedTopic);
     }
 
     public Page<Topic> findAll(Pageable pageable) {

@@ -5,6 +5,8 @@ import br.com.challenge_alura_one_t6.AluraForum.enums.TopicStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -15,6 +17,8 @@ import java.util.List;
 
 @Entity
 @Data
+@Getter
+@Setter
 public class Topic implements Serializable {
 
     @Id
