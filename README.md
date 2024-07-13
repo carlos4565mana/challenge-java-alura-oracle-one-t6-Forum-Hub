@@ -118,6 +118,34 @@ Fique à vontade para explorar o código-fonte, enviar feedbacks ou colaborar co
 - Somente Usuário com permissão de ADMIN pode acessar a rota de Usuários.
 
 - O usuário pode estar ou não logado para ver as postagem e/ou respostas.
+- 
+
+- <h2>Como Executar</h2>
+<ul>
+<li>Clonar repositório git:</li>
+
+</ul>
+<pre><code>git clone https://github.com/carlos4565mana/challenge-java-alura-oracle-one-t6-Forum-Hub.git
+</code></pre>
+<ul>
+<li>Construir o projeto:</li>
+
+</ul>
+<pre><code>./mvnw clean package
+</code></pre>
+<ul>
+<li>Executar:</li>
+
+</ul>
+<pre><code>java -jar ./target/spring-security-jwt-0.0.1-SNAPSHOT.jar
+</code></pre>
+<ul>
+<li></li>
+
+</ul>
+
+Testar ( com [Swagger ):
+http://localhost:8080/swagger-ui.html
 
   
 
