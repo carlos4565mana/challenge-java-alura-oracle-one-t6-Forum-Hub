@@ -37,7 +37,7 @@ public class TopicController {
     public Result addTopic(@Valid @RequestBody TopicDto topicDto){
         Topic topic = topicService.addTopic(topicDto);
         TopicoResponseDto topicDtoResponse = new TopicoResponseDto(topic);
-        return new Result(true,StatusCode.SUCCESS,"Add Success",topicDtoResponse);
+        return new Result(true,StatusCode.CREATED,"Add Success",topicDtoResponse);
 
     }
 

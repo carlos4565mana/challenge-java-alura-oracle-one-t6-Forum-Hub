@@ -2,6 +2,11 @@ package br.com.challenge_alura_one_t6.AluraForum.utils;
 import java.lang.management.ManagementFactory;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
+/**
+ * Gerador de Id
+ * Este trecho de código foi retirado da Internet.
+ * Apenas para fins de demonstração. Use com cuidado!
+ */
 public class IdWorker {
         private final static long twepoch = 1288834974657L;
 

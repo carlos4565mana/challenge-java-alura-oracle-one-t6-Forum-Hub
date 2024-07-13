@@ -24,14 +24,14 @@ public class AuthController {
     @PostMapping("login")
     public Result login( @Valid @RequestBody  AuthenticationDto data){
 
-        return new Result(true, StatusCode.SUCCESS,"Login",authorizationService.login(data));
+        return new Result(true, StatusCode.SUCCESS,"Login Success!",authorizationService.login(data));
 
     }
 
     @PostMapping("register")
     public  Result RegisterDto(@Valid @RequestBody  RegisterDto registerDto){
 
-        return  new Result(true, StatusCode.SUCCESS,"User Create Success",authorizationService.register(registerDto));
+        return  new Result(true, StatusCode.CREATED,"User Create Success!",authorizationService.register(registerDto));
 
     }
 

@@ -41,7 +41,7 @@ public class CourseController {
         Course newCourse = this.courseDtoToCourseCnverter.convert(course);
         Course  savedCourse = this.courseService.save(newCourse);
         CourseDto savedCourseDto = this.courseToCourseDtoConverter.convert(savedCourse);
-        return new Result(true, StatusCode.SUCCESS, "Add Success",savedCourseDto);
+        return new Result(true, StatusCode.CREATED, "Add Success",savedCourseDto);
     }
     @PutMapping("{courseId}")
     public Result updateCourse(@PathVariable Long courseId, @Valid @RequestBody CourseDto courseDto){

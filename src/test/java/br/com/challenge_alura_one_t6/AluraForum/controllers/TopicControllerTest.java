@@ -32,7 +32,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
 @ActiveProfiles(value = "test")
-
 class TopicControllerTest {
     @Autowired
     MockMvc mockMvc;
@@ -76,9 +75,9 @@ class TopicControllerTest {
 
             String json = objectMapper.writeValueAsString(topicDto);
 
-            mockMvc.perform(post("/api/v1/topics").contentType(MediaType.APPLICATION_JSON).content(json).accept(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION,token))
+            mockMvc.perform(post("/api/v1/topics").contentType(MediaType.APPLICATION_JSON).header("Authorization", token).content(json).accept(MediaType.APPLICATION_JSON))
                     .andExpect(jsonPath("$.flag").value(true))
-                    .andExpect(jsonPath("$.code").value(StatusCode.SUCCESS))
+                    .andExpect(jsonPath("$.code").value(StatusCode.CREATED))
                     .andExpect(jsonPath("$.message").value("Add Success"))
                     .andExpect(jsonPath("$.data.id").isNotEmpty())
                     .andExpect(jsonPath("$.data.message").value("Tenho uma duvida como iniciar o projeto em React"));
@@ -87,7 +86,7 @@ class TopicControllerTest {
 
     @Test
     void deleteTopicSuccess() throws Exception {
-        mockMvc.perform(delete("/api/v1/topics/1").accept(MediaType.APPLICATION_JSON))
+        mockMvc.perform(delete("/api/v1/topics/1").accept(MediaType.APPLICATION_JSON).header("Authorization",token))
                 .andExpect(jsonPath("$.flag").value(true))
                 .andExpect(jsonPath("$.code").value(StatusCode.SUCCESS))
                 .andExpect(jsonPath("$.message").value("Delete Success"));
@@ -100,10 +99,10 @@ class TopicControllerTest {
     }
     @Test
     void deleteMotFoundId() throws Exception {
-        mockMvc.perform(get("/api/v1/topics/7").accept(MediaType.APPLICATION_JSON))
+        mockMvc.perform(delete("/api/v1/topics/9").accept(MediaType.APPLICATION_JSON).header("Authorization",token))
                 .andExpect(jsonPath("$.flag").value(false))
                 .andExpect(jsonPath("$.code").value(StatusCode.NOT_FOUND))
-                .andExpect(jsonPath("$.message").value("Could not find topic with Id 7 :("))
+                .andExpect(jsonPath("$.message").value("Could not find topic with Id 9:("))
                 .andExpect(jsonPath("$.data").isEmpty());
 
     }

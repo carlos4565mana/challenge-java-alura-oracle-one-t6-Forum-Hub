@@ -44,7 +44,7 @@ public class AnswerController {
         Answer answer = answerService.saveAnswer(answerDto);
         if(answer==null)throw new ObjectNotFoundException("user or topic",0L);
         AnswerResponseDto answerDtoResponse = new AnswerResponseDto(answer);
-        return new Result(true,StatusCode.SUCCESS,"Add Success",answerDtoResponse);
+        return new Result(true,StatusCode.CREATED,"Add Success",answerDtoResponse);
 
     }
 
