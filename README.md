@@ -93,6 +93,10 @@ Fique à vontade para explorar o código-fonte, enviar feedbacks ou colaborar co
 
 - [x] Listar todos usuários(ADMIN).
 
+- [x] Editar um usuário.(ADMIN)
+      
+- [x] Deletar um usuário(ADMIN)
+
 - [x] Fazer uma postagem de uma dúvida.
 
 - [x] Deletar uma postagem.
