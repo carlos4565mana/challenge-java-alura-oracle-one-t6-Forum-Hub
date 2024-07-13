@@ -9,6 +9,7 @@ import br.com.challenge_alura_one_t6.AluraForum.service.TopicService;
 import br.com.challenge_alura_one_t6.AluraForum.system.Result;
 import br.com.challenge_alura_one_t6.AluraForum.system.StatusCode;
 import br.com.challenge_alura_one_t6.AluraForum.utils.IAuthenticationFacade;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,11 +27,11 @@ public class TopicController {
         this.topicService = topicService;
     }
     @GetMapping("{topicId}")
-
     public Result findTopicById(@PathVariable Long topicId){
         SingleTopicDto singleTopicDto = topicService.findById(topicId);
         return new Result(true, StatusCode.SUCCESS,"Find One Success",singleTopicDto);
     }
+
 
     @PostMapping
     public Result addTopic(@Valid @RequestBody TopicDto topicDto){

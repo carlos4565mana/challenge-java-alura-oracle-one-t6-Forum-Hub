@@ -4,6 +4,8 @@ import br.com.challenge_alura_one_t6.AluraForum.dtos.AnswerDto;
 import br.com.challenge_alura_one_t6.AluraForum.entities.Answer;
 import br.com.challenge_alura_one_t6.AluraForum.entities.Topic;
 import br.com.challenge_alura_one_t6.AluraForum.entities.User;
+import br.com.challenge_alura_one_t6.AluraForum.enums.TopicStatus;
+import br.com.challenge_alura_one_t6.AluraForum.exception.AccessDeniedResourceException;
 import br.com.challenge_alura_one_t6.AluraForum.exception.ObjectNotFoundException;
 import br.com.challenge_alura_one_t6.AluraForum.repositories.AnswerRepository;
 import br.com.challenge_alura_one_t6.AluraForum.repositories.TopicRepository;
@@ -13,6 +15,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -50,6 +53,9 @@ public class AnswerService {
             answer.setUser((User) user);
             answer.setTopic(optionalTopic.get());
             answer.setMessage(answerDto.message());
+            Topic topicAnwered = optionalTopic.get();
+            topicAnwered.setStatus(TopicStatus.ANSWERED);
+            topicRepository.save(topicAnwered);
             return answerRepository.save(answer);
         }
         return  null;
@@ -59,7 +65,7 @@ public class AnswerService {
         var emailUser = authenticationFacade.getAuthentication().getName();
         Answer answer = answerRepository.findById(answerId).orElseThrow(()->new ObjectNotFoundException("answer",answerId));
         var email = answer.getUser().getEmail();
-        if(emailUser != email)throw  new ObjectNotFoundException("This answer doesn't belong to you!", answerId);
+        if(!Objects.equals(emailUser, email))throw  new AccessDeniedResourceException("This answer doesn't belong to you!");
         answer.setMessage(answerDto.message());
         return answerRepository.save(answer);
     }
@@ -68,7 +74,7 @@ public class AnswerService {
         var emailUser = authenticationFacade.getAuthentication().getName();
         Answer answer = answerRepository.findById(answerId).orElseThrow(()->new ObjectNotFoundException("answer",answerId));
         var email = answer.getUser().getEmail();
-        if(emailUser != email) throw  new ObjectNotFoundException("This answer doesn't belong to you!",answerId);
+        if(!Objects.equals(emailUser, email)) throw  new AccessDeniedResourceException("This answer doesn't belong to you!");
         answerRepository.deleteById(answerId);
     }
 }
